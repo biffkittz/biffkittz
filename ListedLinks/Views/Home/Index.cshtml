@@ -1,0 +1,43 @@
+﻿@model List<ListedLinks.Models.ListedLink>
+
+@{
+    ViewBag.Title = "Listed Links Of Learning";
+}
+
+<h1>Ahem, the listed links of learning:</h1>
+<hr />
+
+@foreach (var listedLink in Model)
+{
+    <p>
+        <a href="@listedLink.Url" target="_blank">@listedLink.Title</a>
+        [@listedLink.Author] @*@listedLink.CreatedAt.ToUniversalTime().ToString("u")*@
+    </p>
+}
+
+<hr />
+
+<input type="text" id="comment" placeholder="Enter your feedback" />
+<button type="button" class="btn btn-primary" onclick="saveComment()">Submit</button>
+<script>
+    function saveComment() {
+        var comment = { 
+            "Text": $("#comment").val(),
+            "CreatedAt": new Date().toISOString(),
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "https://biffkittz.com", //"https://biffkittz.com", "http://127.0.0.1:8080",
+            data: JSON.stringify(comment),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert('Success!');
+            },
+            failure: function (response) {
+                alert('error!');
+            }
+        });
+    }
+</script>

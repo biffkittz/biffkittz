@@ -1,0 +1,13 @@
+﻿@model List<ListedLinks.Models.IPAddressString>
+
+@{
+    ViewBag.Title = "DANGER";
+}
+
+
+@foreach (var ipString in Model.Take(500))
+{
+    <p>
+        [@ipString.IPAddress] @*@listedLink.CreatedAt.ToUniversalTime().ToString("u")*@
+    </p>
+}

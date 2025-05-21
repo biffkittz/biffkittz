@@ -1,0 +1,18 @@
+﻿# Located @ /etc/systemd/system/kestrel-biffkittz.service
+[Unit]
+Description=biffkittz
+
+[Service]
+WorkingDirectory=/var/www/biffkittz
+ExecStart=/usr/bin/dotnet /var/www/biffkittz/ListedLinks.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-biffkittz
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Development
+Environment=DOTNET_NOLOGO=true
+
+[Install]
+WantedBy=multi-user.target
