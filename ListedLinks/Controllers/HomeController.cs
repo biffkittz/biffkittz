@@ -52,9 +52,29 @@ namespace ListedLinks.Controllers
             return View(ipAddressStrings);
         }
 
+        public IActionResult LinkManagement()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LinkManagement([FromBody] ListedLink link)
+        {
+            _context.ListedLinks.Add(link);
+            _context.SaveChanges();
+
+            return View();
+        }
+
         public IActionResult Comments()
         {
-            var comments = _context.Comments.Take(500).ToList<Comment>();
+            var comments = _context.Comments.Take(1000).ToList<Comment>();
+            return View(comments);
+        }
+
+        public IActionResult ScreenConnectActivity()
+        {
+            var comments = _context.Comments.Take(1000).ToList<Comment>();
             return View(comments);
         }
 

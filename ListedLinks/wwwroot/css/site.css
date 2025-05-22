@@ -18,6 +18,22 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  background-color: #EEEEEA;
+    position: relative;
+    /*margin-bottom: 60px;
+  background-color: #EEEEEA;*/
+}
+
+#main {
+    margin-bottom: 350px; /* is equal to the footer height - change it as you need, in both common and your mobile tab*/
+}
+
+#sticky-footer {
+    padding: 50px 0;
+    background: var(--header_background); /* optional */
+    color: var(--primary-medium); /* optional */
+    text-align: center; /* optional */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
 }

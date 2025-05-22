@@ -4,8 +4,26 @@
     ViewBag.Title = "Listed Links Of Learning";
 }
 
-<h1>Ahem, the listed links of learning:</h1>
-<hr />
+@* Messing around with some CSS *@
+@* <div style="border-bottom: 3px solid #4588ba; margin-bottom:10px;">
+	<div id="rootworm">
+		<div class="flex-container">
+			<div class="loading">
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+				<div class="x"></div>
+			</div>
+		</div>
+	</div>
+	<h1>Ahem, we present the listed links of learning:</h1>
+</div> *@
+
+<h1>Ahem, we present the listed links of learning:</h1>
 
 @foreach (var listedLink in Model)
 {
@@ -17,8 +35,75 @@
 
 <hr />
 
-<input type="text" id="comment" placeholder="Enter your feedback" />
-<button type="button" class="btn btn-primary" onclick="saveComment()">Submit</button>
+<style>
+	.flex-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100px;
+	}
+
+	.loading {
+		display: flex;
+		align-items: center;
+		transform: perspective(1000px) rotateX(60deg);
+		transform-style: preserve-3d;
+		height: 60px;
+	}
+
+	@@keyframes loading {
+		0%,100% {
+			height: 10px;
+			transform: translateZ(-20px);
+		}
+
+		50% {
+			height: 40px;
+			transform: translateZ(20px);
+		}
+	}
+
+	.loading .x {
+		background-color: #4588ba;
+		animation: loading .8s infinite;
+		width: 10px;
+		height: 0;
+		margin: 0 1px;
+		border-radius: 10px;
+	}
+
+	.loading .x:nth-child(2) {
+		animation-delay: .1s;
+	}
+
+	.loading .x:nth-child(3) {
+		animation-delay: .2s;
+	}
+
+	.loading .x:nth-child(4) {
+		animation-delay: .3s;
+	}
+
+	.loading .x:nth-child(5) {
+		animation-delay: .4s;
+	}
+
+	.loading .x:nth-child(6) {
+		animation-delay: .5s;
+	}
+
+	.loading .x:nth-child(7) {
+		animation-delay: .6s;
+	}
+
+	.loading .x:nth-child(8) {
+		animation-delay: .7s;
+	}
+</style>
+
+<input type="text" id="comment" style="width: 800px" placeholder="Feedback" />
+<button type="button" class="btn btn-primary" style="background-color: #4588ba" onclick="saveComment()">Submit</button>
 <script>
     function saveComment() {
         var comment = { 

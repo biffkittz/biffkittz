@@ -12,6 +12,7 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,5 +103,14 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.UseForwardedHeaders();
+
+app.MapPost("/ingest", async ([FromBody] string data, ListedLinksContext db, HttpContext context) =>
+{
+    var clientIP = context.Connection.RemoteIpAddress?.ToString();
+    await db.Comments.AddAsync(new Comment { Text = $"{data} [clientIP: {clientIP}]", CreatedAt = DateTime.Now });
+    await db.SaveChangesAsync();
+
+    return Results.Ok("success");
+});
 
 app.Run();

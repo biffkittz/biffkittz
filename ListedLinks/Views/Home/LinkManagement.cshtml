@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Link Management";
+}
+
+<h1>Add a Link</h1>
+<hr />
+
+<input type="text" id="linkInfo" style="width: 768px" placeholder="<url>|||<title>|||author" />
+<button type="button" class="btn btn-primary" onclick="saveLink()">Submit</button>
+<script>
+    function saveLink() {
+        var linkInfo = {
+            "Url": $("#linkInfo").val().split("|||")[0],
+            "Title": $("#linkInfo").val().split("|||")[1],
+            "Author": $("#linkInfo").val().split("|||")[2],
+            "CreatedAt": new Date().toISOString()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "https://biffkittz.com/Home/LinkManagement", //"https://biffkittz.com", "http://127.0.0.1:8080",
+            data: JSON.stringify(linkInfo),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                alert('Success!');
+            }
+        });
+    }
+</script>
