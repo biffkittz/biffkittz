@@ -1,5 +1,6 @@
 using ListedLinks.Models;
 using ListedLinks.Pages;
+using ListedLinks.Hubs;
 using Microsoft.EntityFrameworkCore;
 
 using Microsoft.Extensions.Hosting;
@@ -52,6 +53,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders =
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -112,5 +115,7 @@ app.MapPost("/ingest", async ([FromBody] string data, ListedLinksContext db, Htt
 
     return Results.Ok("success");
 });
+
+app.MapHub<SaaSActivityHub>("/saasactivityhub");
 
 app.Run();

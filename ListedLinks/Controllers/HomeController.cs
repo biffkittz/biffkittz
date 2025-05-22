@@ -78,6 +78,11 @@ namespace ListedLinks.Controllers
             return View(comments);
         }
 
+        public IActionResult Ramblings()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "We're gonna ramble, and more than once!";
+}
+
+<div class="card" style="width: 1000px; margin-bottom: 10px">
+    <div class="card-header">
+        Pioneer Rambling
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <pre>
+            A really tasty sandwich courtesy of "The Pradeeps of Pittsburgh":
+            Bok choy
+            Avocado
+            Corn chips
+            Soy sauce
+            Ranch dressing
+            Toasted bread
+            </pre>
+        </p>
+    </div>
+</div>
+
+<div class="card" style="width: 1000px; margin-bottom: 10px">
+    <div class="card-header">
+        K8s Terms
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <pre>
+            pods/nodes/
+            etcd
+            kubectl run nginx --image=nginx
+            kubectl create -f pod-def.yaml
+            kubectl run redis --image=redisX --dry-run=client -o yaml
+            kubectl create -f deployment-def.yaml
+            kubectl scale --replicas=5 replicaset web-rs
+            kubectl get pods -o wide
+            kubeadm for cluster setup
+            kube-apiserver: use kubectl proxy to access
+            replication-controller
+            kube-scheduler (where should pods go)
+            kubelet (captain of the worker node)
+            kube-proxy (review daemonsets, uses iptables)
+            </pre>
+        </p>
+    </div>
+</div>
