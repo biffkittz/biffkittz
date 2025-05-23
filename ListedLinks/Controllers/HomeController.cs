@@ -57,6 +57,11 @@ namespace ListedLinks.Controllers
             return View(ipAddressStrings);
         }
 
+        public IActionResult Books()
+        {
+            return View();
+        }
+
         public IActionResult LinkManagement()
         {
             return View();
@@ -73,13 +78,13 @@ namespace ListedLinks.Controllers
 
         public IActionResult Comments()
         {
-            var comments = _context.Comments.Take(1000).ToList<Comment>();
+            var comments = _context.Comments.Take(500).ToList<Comment>();
             return View(comments);
         }
 
         public IActionResult ScreenConnectActivity()
         {
-            var comments = _context.Comments.Take(1000).ToList<Comment>();
+            var comments = _context.Comments.Take(500).ToList<Comment>();
             return View(comments);
         }
 
