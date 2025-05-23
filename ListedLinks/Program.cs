@@ -56,6 +56,18 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 builder.Services.AddSignalR();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("http://127.0.0.1:8080", "https://biffkittz.com", "http://localhost:8080")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST", "OPTIONS")
+                .AllowCredentials();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -116,6 +128,94 @@ app.MapPost("/ingest", async ([FromBody] string data, ListedLinksContext db, Htt
     return Results.Ok("success");
 });
 
+//app.UseCors();
 app.MapHub<SaaSActivityHub>("/saasactivityhub");
+
+//app.Use(async (context, next) =>
+//{
+//    if (context.Request.Path == "/loginstanceevent")
+//    {
+//        var hubContext = context.RequestServices
+//            .GetRequiredService<IHubContext<InstanceEventHub>>();
+//        var instanceWebHostNameKey = context.Request.Query["wk"].ToString();
+//        var instanceEventDatum = context.Request.Query["d"].ToString();
+
+//        // TODO: Make configurable
+//        //if ((new List<string> { "biffkittz1234", "transientpermanence5267" }).Where(_ => instanceWebHostNameKey
+//        //        .ToLower()
+//        //        .Contains(_)
+//        //    ).Count() > 0
+//        //)
+//        //{
+//        //await hubContext.Clients.All.SendAsync("ReceiveInstanceEvent", instanceWebHostNameKey, instanceEventDatum);
+
+//        if (!instanceEventDatum.Contains("ai_Echo")) // don't re-analyze an event we already analyzed and posted back to the instance
+//        {
+//            var bot = new ChatGpt(TinkerModel.ApiKey ?? "");
+//            var prompt = @"Please start your response to this task in a funny, snarky way. The use of puns is encouraged.
+//                    You are a sophisticated translator of json-formatted ScreenConnect instance event data into plain English sentences. You love hot dogs and the smell of swamp.
+//                    Please review the following json-formatted ScreenConnect instance event datum and summarize its most important aspects in plain English;
+//                    include the participant or host name and IP address or network address in your summary when available: " + instanceEventDatum;
+//            var funPrompt = "You are a comedienne specializing in remote support software technology humor. Your favorite bird is red and you dip your bananas in coffee. Tell a silly tech joke for the slightly edgy audience.";
+
+//            if (instanceEventDatum.IndexOf("QueuedCommand") == -1 && instanceEventDatum.IndexOf("peanuthamper") > -1)
+//            {
+//                prompt = funPrompt;
+//                var aiResponse = await bot.Ask(prompt);
+//                await hubContext.Clients.All.SendAsync(
+//                    "ClientHasReceivedALittleSomething",
+//                    "GPT",
+//                    $"{aiResponse}|||-||||RawEventData:{instanceEventDatum}|||-||||ai_Echo"
+//                );
+//            }
+//            else if (instanceEventDatum.StartsWith("SOSSOSSOS"))
+//            {
+//                await hubContext.Clients.All.SendAsync(
+//                    "ClientHasReceivedALittleSomething",
+//                    "SOS",
+//                    instanceEventDatum.Replace("SOSSOSSOS", "")
+//                );
+//            }
+//            else if (instanceEventDatum.StartsWith("GUESTGUEST"))
+//            {
+//                await hubContext.Clients.All.SendAsync(
+//                    "ClientHasReceivedALittleSomething",
+//                    "SOS",
+//                    instanceEventDatum.Replace("GUESTGUEST", "")
+//                );
+//            }
+
+//            using (var httpClient = new HttpClient())
+//            {
+//                try
+//                {
+//                    await httpClient.PostAsJsonAsync(
+//                        "https://biffkittz.screenconnect.com/App_Extensions/afe875d2-f636-408a-a02d-43db12626c9e/Service.ashx/RecordNote",
+//                        "[\"aiResponse\"]"
+//                    );
+//                }
+//                catch (Exception ex)
+//                {
+//                    await hubContext.Clients.All.SendAsync(
+//                        "ClientHasReceivedALittleSomething",
+//                        "GPT",
+//                        $"Exception|||^||||<<RawEventData: {ex.Message}>>|||^||||<<ai_Echo>>"
+//                    );
+//                }
+//            }
+//            ;
+
+//            // POST to instance
+//        }
+
+//        context.Response.StatusCode = StatusCodes.Status200OK;
+//        return;
+//    }
+
+//    if (next != null)
+//    {
+//        await next.Invoke();
+//    }
+//});
 
 app.Run();

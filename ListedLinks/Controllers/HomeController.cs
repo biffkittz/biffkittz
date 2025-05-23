@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Diagnostics;
+using ListedLinks.Hubs;
 using ListedLinks.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ListedLinks.Controllers
@@ -10,11 +13,13 @@ namespace ListedLinks.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ListedLinksContext _context;
+        private readonly IHubContext<SaaSActivityHub> _hubContext;
 
-        public HomeController(ILogger<HomeController> logger, ListedLinksContext context)
+        public HomeController(ILogger<HomeController> logger, ListedLinksContext context, IHubContext<SaaSActivityHub> hubContext)
         {
             _logger = logger;
             _context = context;
+            _hubContext = hubContext;
         }
 
         public IActionResult Index()
@@ -76,6 +81,37 @@ namespace ListedLinks.Controllers
         {
             var comments = _context.Comments.Take(1000).ToList<Comment>();
             return View(comments);
+        }
+
+        public IActionResult Monitor()
+        {
+            var comments = _context.Comments.Take(5000).ToList<Comment>();
+            return View(comments);
+        }
+
+        [HttpPost]
+        public IResult Monitor([FromBody] string commentText)
+        {
+            if (commentText != null /*&& commentText.StartsWith("ScreenConnect-d7f4d503647e227df8583449a07a4000 ")*/)
+            {
+                //var _commentText = commentText.Replace("-d7f4d503647e227df8583449a07a4000", "");
+                var comment = new Comment
+                {
+                    Text = commentText,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _context.Comments.Add(comment);
+                _context.SaveChanges();
+
+                _hubContext.Clients.All.SendAsync(
+                    "ReceiveMessage",
+                    "ScreenConnect",
+                    commentText
+                );
+            }
+
+            return Results.Ok();
         }
 
         public IActionResult Ramblings()

@@ -2,31 +2,55 @@
 
 "use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/saasactivityhub").build();
+window.signalRConnection = new signalR.HubConnectionBuilder()
+    .withUrl("https://biffkittz.com/saasactivityhub")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
-//Disable the send button until connection is established.
-document.getElementById("sendButton").disabled = true;
+async function startSignalRConnection() {
+    try {
+        await window.signalRConnection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
 
-connection.on("ReceiveMessage", function (user, message) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
-    li.textContent = `${user} says ${message}`;
+window.signalRConnection.on("ReceiveMessage", function (user, message) {
+    console.log("Received SignalR message: " + message);
+
+    // Create the main card container
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.width = '1000px';
+    card.style.marginBottom = '10px';
+
+    // Create the card header
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'card-header';
+    cardHeader.textContent = (new Date()).toUTCString();
+
+    // Create the card body
+    const cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+
+    // Create the card text paragraph
+    const cardText = document.createElement('p');
+    cardText.className = 'card-text';
+    cardText.textContent = message;
+
+    // Assemble the card
+    cardBody.appendChild(cardText);
+    card.appendChild(cardHeader);
+    card.appendChild(cardBody);
+
+    document.getElementsByTagName('main')[1].appendChild(card);
+    //document.getElementById("messagesList").appendChild(card);
 });
 
-connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
+window.signalRConnection.onclose(async () => {
+    await startSignalRConnection();
 });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", user, message).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});
+startSignalRConnection()
