@@ -1,7 +1,7 @@
 ﻿@model List<ListedLinks.Models.ListedLink>
 
 @{
-    ViewBag.Title = "Listed Links Of Learning";
+	ViewBag.Title = "Biffkittz";
 }
 
 @* Messing around with some CSS *@
@@ -23,13 +23,66 @@
 	<h1>Ahem, we present the listed links of learning:</h1>
 </div> *@
 
-<h1>And now, a presentation of the listed links of learning:</h1>
+<div class="card" style="width: 1000px; margin-bottom:5px">
+	<div class="card-header">
+		May/June 2025: What I'm doing with my time
+	</div>
+	<div class="card-body">
+		<ul style="list-style-type:circle">
+			<li>Tinkering with Kubernetes by building a homelab K8s cluster</li>
+			<li>Learning Kubernetes by completing Mumshad Mannambeth’s Udemy/KodeKloud Kubernetes coursework</li>
+			<li>Studying for the Certified Kubernetes Application Developer (CKAD) certification exam</li>
+			<li>Learning PostgreSQL using the hands-on book "The Art of PostgreSQL"</li>
+			<li>Learning PostgreSQL by deploying and configuring a homelab PostgreSQL server cluster</li>
+			<li>Homelab PostgreSQL service to be containerized and hosted in homelab K8s cluster</li>
+			<li>Deepening understanding of C# and .NET through ASP.NET Core web development</li>
+			<li>Working through the hands-on book "Pro ASP.NET" by Adam Freeman</li>
+			<li>Creating and updating this site, biffkittz.com</li>
+		</ul>
+	</div>
+</div>
+
+<div class="card" style="width: 1000px; margin-bottom:5px">
+	<div class="card-header">
+		biffkittz.com site details and deployment
+	</div>
+	<div class="card-body">
+		<ul style="list-style-type:circle">
+			<li>Cloudflare DNS</li>
+			<li>DigitalOcean droplet running Ubuntu 24.04.1 LTS</li>
+			<li>nginx proxy</li>
+			<li>Kestrel web server</li>
+			<li>.NET 9.0</li>
+			<li>ASP.NET MVC with Razor Pages</li>
+			<li>OpenAI/ChatGPT-integrated [ask for details]</li>
+			<li>SignalR-integrated to display realtime ScreenConnect integration activity [ask for details]</li>
+			<li>EF Core ORM</li>
+			<li>SQLite database, to be migrated to PostgresSQL in time</li>
+			<li>Deployed via GitHub Actions [work in progress]</li>
+		</ul>
+	</div>
+</div>
+
+<div class="card" style="width: 1000px; margin-bottom:5px">
+	<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+		Recent listed links of learning
+	</div>
+		@foreach (var listedLink in Model)
+		{
+			<div class="card-body" style="padding-bottom: 10px; padding-top: 0px">
+				<li><a href="@listedLink.Url" target="_blank">@listedLink.Title</a>[@listedLink.Author]</li>
+			</div>
+		}
+</div>
+
+
+@* <h1>And now, a presentation of recent listed links of learning:</h1>
 
 @foreach (var listedLink in Model)
 {
     <p>
         <a href="@listedLink.Url" target="_blank">@listedLink.Title</a>
-        [@listedLink.Author] @*@listedLink.CreatedAt.ToUniversalTime().ToString("u")*@
+        [@listedLink.Author]
     </p>
 }
 
@@ -100,9 +153,9 @@
 	.loading .x:nth-child(8) {
 		animation-delay: .7s;
 	}
-</style>
+</style> *@
 
-<input type="text" id="comment" style="width: 800px" placeholder="Feedback" />
+<input type="text" id="comment" style="width: 920px" placeholder="Feedback" />
 <button type="button" class="btn btn-primary" style="background-color: #4588ba" onclick="saveComment()">Submit</button>
 <script>
     function saveComment() {

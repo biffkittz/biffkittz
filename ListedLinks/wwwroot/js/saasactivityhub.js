@@ -46,6 +46,7 @@ window.signalRConnection.on("ReceiveMessage", function (user, message) {
     card.appendChild(cardBody);
 
     document.getElementsByTagName('main')[1].appendChild(card);
+    window.scrollTo(0, document.body.scrollHeight);
     //document.getElementById("messagesList").appendChild(card);
 });
 
