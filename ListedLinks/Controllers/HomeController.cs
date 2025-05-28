@@ -37,7 +37,7 @@ namespace ListedLinks.Controllers
                 }
             }
 
-            var linkGroups = _context.ListedLinks.OrderBy(_ => _.Title).ToList<ListedLink>();
+            var linkGroups = _context.ListedLinks.OrderBy(_ => _.Title.ToLower()).ToList<ListedLink>();
             return View(linkGroups);
         }
 
@@ -46,7 +46,7 @@ namespace ListedLinks.Controllers
         {
             _context.Comments.Add(comment);
             _context.SaveChanges();
-            var linkGroups = _context.ListedLinks.OrderBy(_ => _.Title).ToList<ListedLink>();
+            var linkGroups = _context.ListedLinks.OrderBy(_ => _.Title.ToLower()).ToList<ListedLink>();
 
             return View(linkGroups);
         }

@@ -13,7 +13,7 @@
     <header style="position:fixed; top: 0; left: 0; width: 100%; background-color: #fff; color: #fff; padding: 10px; z-index: 100">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Biffkittz</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="padding-bottom:17px">Biffkittz</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -47,8 +47,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="mailto:benjamin.e.burner@@gmail.com">Email</a>
                         </li>
-                        <li>
-                            <p style="padding-top: 0.5rem; padding-left: 0.5rem; color: gray">@System.Diagnostics.Process.GetCurrentProcess().StartTime.ToString("yyyyddmmHHmm")-@Environment.Version.ToString()-@Environment.OSVersion.ToString()</p>
+                        <li class ="nav-item">
+                            <p style="padding-top: 0.5rem; padding-left: 0.5rem; color: gray">@System.Diagnostics.Process.GetCurrentProcess().StartTime.ToString("yyyyMMddHHmm")-@Environment.Version.ToString()-@Environment.OSVersion.ToString()</p>
                         </li>
                     </ul>
                 </div>

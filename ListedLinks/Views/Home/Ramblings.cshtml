@@ -2,6 +2,22 @@
     ViewData["Title"] = "We're gonna ramble, and more than once!";
 }
 
+<style type="text/css">
+    /* Three image containers (use 25% for four, and 50% for two, etc) */
+    .imgColumn {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+    }
+
+    /* Clear floats after image containers */
+    .imgRow::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+
 <div class="card" style="width: 1000px; margin-bottom: 10px">
     <div class="card-header">
         Pioneer Rambling
@@ -42,7 +58,39 @@
             kube-scheduler (where should pods go)
             kubelet (captain of the worker node)
             kube-proxy (review daemonsets, uses iptables)
+            namespaces 
+            node affinity and node selectors
+            tainted nodes and tolerant pods
+            clusterip / nodeport / loadbalancer services
+            deployments and replicasets
+            requiredDuringSchedulingIgnoredDuringExecution
             </pre>
+        </p>
+    </div>
+</div>
+
+<div class="card" style="width: 1000px; margin-bottom: 10px">
+    <div class="card-header">
+        Lamp building
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <pre style="margin-bottom: 0px">
+            Lamps of wood
+            With wood sourced from the backyard (or nearby)
+            Aiming for this sort of look:
+            </pre>
+            <div class="imgRow" style="margin-left: 10%">
+                <div class="imgColumn">
+                    <img style="max-height: 300px; max-width: 300px; border-radius: 7%; filter: brightness(160%)" src="https://www.dropbox.com/scl/fi/uhhlhb5h26ep9ps8jj4vu/thelamp.png?rlkey=7klu68ao5xsjy2batdkr28cgh&st=oo6sjd3q&raw=1" alt="What lamp is this?">
+                </div>
+                <div class="imgColumn">
+                    <img style="max-height: 300px; max-width: 300px; border-radius: 7%; filter: brightness(200%)" src="https://www.dropbox.com/scl/fi/3jtt9bjvu89txn0c4meat/shellamp.png?rlkey=axl8tt9lsyv0pu5hguauklias&st=fm8ro28t&raw=1" alt="In my dreams" />
+                </div>
+                <div class="imgColumn">
+                    <img style="max-height: 300px; max-width: 300px; border-radius: 7%; filter: brightness(200%)" src="https://www.dropbox.com/scl/fi/aico07ax3p7fo7z9uqfvb/nightlamp.png?rlkey=cc4801h06oeoy59ixo4kijw3h&st=y7vgeycn&raw=1" alt="I love lamp">
+                </div>
+            </div>
         </p>
     </div>
 </div>
