@@ -134,6 +134,11 @@ namespace ListedLinks.Controllers
             return View();
         }
 
+        public IActionResult Vue()
+        {
+            return View();
+        }
+
         //public IActionResult React()
         //{
         //    return View(_comments);

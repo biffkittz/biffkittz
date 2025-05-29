@@ -1,0 +1,36 @@
+﻿@*
+    Adapted from https://www.giftoasis.com/blog/asp-net-core/vue/using-vue-with-asp-net-razor-can-be-great
+*@
+
+@page
+@{
+    Layout = "_LayoutVue";
+}
+
+@section Head {
+    <style>
+        .buttonWrap {
+            margin-top: 20px
+        }
+    </style>
+}
+
+<div>
+    <h1>Vue'd</h1>
+
+    Message from Vue: <span v-text="appMessage"></span><br />
+
+    <div class="buttonWrap">
+        <button type="button" v-if="displayButton1">BestButton</button>
+        <button type="button" v-if="displayButton2">TheRestButton</button>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        // These are regular javascript variables not Vue properties, so not reactive
+        var displayButton1 = true;
+        var displayButton2 = false;
+    </script>
+}
