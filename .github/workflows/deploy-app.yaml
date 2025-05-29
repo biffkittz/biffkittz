@@ -35,7 +35,7 @@ jobs:
       #- name: Stop the server
       #  run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
-      - name: Echo SSH_HOST variable
+      - name: Debug SSH
         env:
           SSH_USER: ${{ vars.SSH_USER }}
           SSH_HOST: ${{ vars.SSH_HOST }}
@@ -44,6 +44,7 @@ jobs:
           echo "${{ env.SSH_HOST }}"
           echo "${{ env.SSH_USER }}"
           echo "${{ env.SSH_PRIVATE_KEY }}" | head -c 5
+          ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
 
       # - name: Start the server
