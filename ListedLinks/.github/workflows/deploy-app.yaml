@@ -9,11 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: rsync deployment
-      env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reference the private key stored in GitHub Secrets
-          HOST: ${{ secrets.SSH_HOST }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          PORT: ${{ secrets.SSH_PORT }}
       uses: burnett01/rsync-deployments@7.0.2
       with:
         switches: -avzr --delete
@@ -23,7 +18,14 @@ jobs:
         remote_port: ${{ secrets.SSH_PORT }}
         remote_user: ${{ secrets.SSH_USERNAME }}
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - run: |
+    
+    - name: Build on remote
+      env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reference the private key stored in GitHub Secrets
+          HOST: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USERNAME }}
+          PORT: ${{ secrets.SSH_PORT }}
+      run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
 
