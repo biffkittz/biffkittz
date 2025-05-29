@@ -36,9 +36,11 @@ jobs:
         # Establish an SSH connection and execute commands on the remote server
         ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
           sudo touch /root/touched_by_a_github_angel_2
-        EOF
+          pwd_ls=$(sudo ls -als /root/deployments/)
+          echo $pwd_ls
 
-        pwd_ls=$(sudo ls -als /root/deployments/)
-        echo $pwd_ls
+          sudo mkdir /root/deployments2
+          sudo cp -r /root/deployments/* /root/deployments2/
+        EOF
 
         rm -f private_key.pem
