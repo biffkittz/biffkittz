@@ -34,7 +34,7 @@ jobs:
         echo "$PRIVATE_KEY" > private_key.pem
         echo "$APP_SETTINGS" > appsettings.json
         chmod 600 private_key.pem
-        scp -i private_key.pem appsettings.json root@159.89.253.102:/root/deployments/
+        scp -v -i private_key.pem -o StrictHostKeyChecking=no -o appsettings.json root@159.89.253.102:/root/deployments/
 
         # Establish an SSH connection and execute commands on the remote server
         ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
