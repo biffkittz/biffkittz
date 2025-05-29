@@ -11,7 +11,6 @@ jobs:
   #   ...
   deploy:
     name: "Test deploy"
-    environment: production
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     # needs: test
@@ -29,15 +28,17 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_USER: ${{ vars.SSH_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_HOST: ${{ vars.SSH_HOST }}
 
       #- name: Stop the server
       #  run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
-      - name: Echo secrets for debug
-        run: echo "$SSH_HOST"
+      - name: Echo SSH_HOST variable
+        run: |
+          echo "${{ env.SSH_HOST }}"
+          echo "${{ env.SSH_USER }}"
 
       # - name: Start the server
       #   if: ${{ always() }}
