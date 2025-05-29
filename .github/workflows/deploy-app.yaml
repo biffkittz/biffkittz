@@ -20,6 +20,7 @@ jobs:
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
   
   build:
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
     - name: build on remote
