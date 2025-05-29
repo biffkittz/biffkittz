@@ -23,7 +23,7 @@ jobs:
 
           # Establish an SSH connection and execute commands on the remote server
           ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
-            whoami
+            sudo touch /root/touched_by_github_action
           EOF
 
           rm -f private_key.pem
