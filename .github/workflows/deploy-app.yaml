@@ -38,7 +38,7 @@ jobs:
           sudo touch /root/touched_by_a_github_angel_2
         EOF
 
-        pwd_ls=$(ls -als /root/deployments/)
+        pwd_ls=$(sudo ls -als /root/deployments/)
         echo $pwd_ls
 
         rm -f private_key.pem
