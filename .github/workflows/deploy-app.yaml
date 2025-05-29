@@ -32,11 +32,11 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      - name: Stop the server
-        run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
+      #- name: Stop the server
+      #  run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
-      # - name: Check out the source
-      #   run: ssh biffkittz 'cd my-application && git fetch && git reset --hard origin/main'
+      - name: Echo secrets for debug
+        run: echo "$SSH_HOST"
 
       # - name: Start the server
       #   if: ${{ always() }}
