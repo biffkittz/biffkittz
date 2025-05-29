@@ -36,6 +36,9 @@ jobs:
       #  run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
       - name: Echo SSH_HOST variable
+        env:
+          SSH_USER: ${{ vars.SSH_USER }}
+          SSH_HOST: ${{ vars.SSH_HOST }}
         run: |
           echo "${{ env.SSH_HOST }}"
           echo "${{ env.SSH_USER }}"
