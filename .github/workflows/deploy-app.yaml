@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2 # Check out your repository code
+        uses: actions/checkout@v4 # Check out your repository code
+        with:
+          ref: main # Specify the branch to check out
 
       - name: Execute SSH command
         env:
@@ -23,7 +25,10 @@ jobs:
 
           # Establish an SSH connection and execute commands on the remote server
           ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
-            sudo touch /root/touched_by_github_action
+            sudo touch /root/touched_by_a_github_angel
           EOF
+
+          pwd_ls=$(ls -als $(pwd))
+          echo $pwd_ls
 
           rm -f private_key.pem
