@@ -12,7 +12,7 @@ jobs:
   deploy:
     name: "Deploy to biffkittz"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     # needs: test
     steps:
       - name: Configure SSH
@@ -36,7 +36,7 @@ jobs:
         run: ssh biffkittz 'sudo ls -als /var/www/biffkittz'
 
       # - name: Check out the source
-      #   run: ssh biffkittz 'cd my-application && git fetch && git reset --hard origin/master'
+      #   run: ssh biffkittz 'cd my-application && git fetch && git reset --hard origin/main'
 
       # - name: Start the server
       #   if: ${{ always() }}
