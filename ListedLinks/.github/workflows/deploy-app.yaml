@@ -18,8 +18,11 @@ jobs:
         remote_port: ${{ secrets.SSH_PORT }}
         remote_user: ${{ secrets.SSH_USERNAME }}
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
-    
-    - name: Build on remote
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: build on remote
       env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reference the private key stored in GitHub Secrets
           HOST: ${{ secrets.SSH_HOST }}
@@ -38,4 +41,3 @@ jobs:
         echo $pwd_ls
 
         rm -f private_key.pem
-
