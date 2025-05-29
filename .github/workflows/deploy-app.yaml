@@ -6,29 +6,41 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4 # Check out your repository code
-        with:
-          ref: main # Specify the branch to check out
+    - uses: actions/checkout@v4
+    - name: rsync deployment
+      uses: burnett01/rsync-deployments@7.0.2
+      with:
+        switches: -avzr --delete
+        path: ListedLinks/
+        remote_path: /root/deployments/test-deployment
+        remote_host: ${{ secrets.SSH_HOST }}
+        remote_port: ${{ secrets.SSH_PORT }}
+        remote_user: ${{ secrets.SSH_USERNAME }}
+        remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Execute SSH command
-        env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reference the private key stored in GitHub Secrets
-          HOST: ${{ secrets.SSH_HOST }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          PORT: ${{ secrets.SSH_PORT }}
-        run: |
-          echo "$PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v4 # Check out your repository code
+    #     with:
+    #       ref: main # Specify the branch to check out
 
-          # Establish an SSH connection and execute commands on the remote server
-          ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
-            sudo touch /root/touched_by_a_github_angel
-          EOF
+    #   - name: Execute SSH command
+    #     env:
+    #       PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Reference the private key stored in GitHub Secrets
+    #       HOST: ${{ secrets.SSH_HOST }}
+    #       USERNAME: ${{ secrets.SSH_USERNAME }}
+    #       PORT: ${{ secrets.SSH_PORT }}
+    #     run: |
+    #       echo "$PRIVATE_KEY" > private_key.pem
+    #       chmod 600 private_key.pem
 
-          pwd_ls=$(ls -als $(pwd))
-          echo $pwd_ls
+    #       # Establish an SSH connection and execute commands on the remote server
+    #       ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
+    #         sudo touch /root/touched_by_a_github_angel
+    #       EOF
 
-          rm -f private_key.pem
+    #       pwd_ls=$(ls -als $(pwd))
+    #       echo $pwd_ls
+
+    #       rm -f private_key.pem
