@@ -13,7 +13,7 @@ jobs:
       with:
         switches: -avzr --delete
         path: ListedLinks/
-        remote_path: /root/deployments/test-deployment
+        remote_path: /root/deployments/
         remote_host: ${{ secrets.SSH_HOST }}
         remote_port: ${{ secrets.SSH_PORT }}
         remote_user: ${{ secrets.SSH_USERNAME }}
