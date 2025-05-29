@@ -36,11 +36,26 @@ jobs:
         # Establish an SSH connection and execute commands on the remote server
         ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
           sudo touch /root/touched_by_a_github_angel_2
-          pwd_ls=$(sudo ls -als /root/deployments/)
-          echo $pwd_ls
 
           sudo mkdir /root/deployments2
           sudo cp -r /root/deployments/* /root/deployments2/
+
+          sudo systemctl stop kestrel-biffkittz.service
+
+          sudo cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks.db
+          sudo cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks-bk.db
+          sudo rm -rf /var/www/biffkittz
+          sudo mkdir /var/www/biffkittz
+
+          sudo dotnet publish /root/deployments/ListedLinks.csproj -r linux-x64 --self-contained
+          
+          sudo cp -rf /root/deployments/bin/Release/net8.0/linux-x64/* /var/www/biffkittz/
+          sudo cp -f /tmp/ListedLinks.db /var/www/biffkittz/ListedLinks.db
+
+          sudo nginx -t
+          sudo nginx -s reload
+
+          sudo systemctl start kestrel-biffkittz.service
         EOF
 
         rm -f private_key.pem
