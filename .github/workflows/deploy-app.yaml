@@ -1,14 +1,14 @@
-name:  Test Deployment Workflow
+name:  Deploy Site
 on:
   push:
     branches:
       - main
 jobs:
-  deploy:
+  sync:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: rsync deployment
+    - name: rsync copy
       uses: burnett01/rsync-deployments@7.0.2
       with:
         switches: -avzr --delete
@@ -19,8 +19,8 @@ jobs:
         remote_user: ${{ secrets.SSH_USERNAME }}
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
   
-  build:
-    needs: deploy
+  publish:
+    needs: sync
     runs-on: ubuntu-latest
     steps:
     - name: build on remote
