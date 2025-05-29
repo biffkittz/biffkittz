@@ -39,9 +39,12 @@ jobs:
         env:
           SSH_USER: ${{ vars.SSH_USER }}
           SSH_HOST: ${{ vars.SSH_HOST }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "${{ env.SSH_HOST }}"
           echo "${{ env.SSH_USER }}"
+          echo "${{ env.SSH_PRIVATE_KEY }}" | head -c 5
+
 
       # - name: Start the server
       #   if: ${{ always() }}
