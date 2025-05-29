@@ -29,28 +29,31 @@ jobs:
           HOST: ${{ secrets.SSH_HOST }}
           USERNAME: ${{ secrets.SSH_USERNAME }}
           PORT: ${{ secrets.SSH_PORT }}
+          APP_SETTINGS: ${{ secrets.APP_SETTINGS }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
+        echo "$APP_SETTINGS" > appsettings.json
         chmod 600 private_key.pem
+        scp -i private_key.pem appsettings.json root@159.89.253.102:/root/deployments/
 
         # Establish an SSH connection and execute commands on the remote server
         ssh -o StrictHostKeyChecking=no -i private_key.pem root@159.89.253.102 <<EOF
-          systemctl stop kestrel-biffkittz.service
+          sudo systemctl stop kestrel-biffkittz.service
 
-          cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks.db
-          cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks-bk.db
-          rm -rf /var/www/biffkittz
-          mkdir /var/www/biffkittz
+          sudo cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks.db
+          sudo cp -f /var/www/biffkittz/ListedLinks.db /tmp/ListedLinks-bk.db
+          sudo rm -rf /var/www/biffkittz
+          sudo mkdir /var/www/biffkittz
 
-          dotnet publish /root/deployments/ListedLinks.csproj -r linux-x64 --self-contained
+          sudo dotnet publish /root/deployments/ListedLinks.csproj -r linux-x64 --self-contained
 
-          cp -rf /root/deployments/bin/Release/net8.0/linux-x64/* /var/www/biffkittz/
-          cp -f /tmp/ListedLinks.db /var/www/biffkittz/ListedLinks.db
+          sudo cp -rf /root/deployments/bin/Release/net8.0/linux-x64/* /var/www/biffkittz/
+          sudo cp -f /tmp/ListedLinks.db /var/www/biffkittz/ListedLinks.db
 
-          nginx -t
-          nginx -s reload
+          sudo nginx -t
+          sudo nginx -s reload
 
-          systemctl start kestrel-biffkittz.service
+          sudo systemctl start kestrel-biffkittz.service
         EOF
 
         rm -f private_key.pem
