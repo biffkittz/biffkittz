@@ -48,7 +48,7 @@ jobs:
           sudo dotnet publish /root/deployments/ListedLinks.csproj -r linux-x64 --self-contained
 
           sudo cp -rf /root/deployments/bin/Release/net8.0/linux-x64/* /var/www/biffkittz/
-          sudo cp -f /tmp/ListedLinks-mig1.db /var/www/biffkittz/ListedLinks.db
+          sudo cp -f /tmp/ListedLinks.db /var/www/biffkittz/ListedLinks.db
 
           sudo nginx -t
           sudo nginx -s reload
