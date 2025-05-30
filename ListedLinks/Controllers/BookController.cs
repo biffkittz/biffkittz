@@ -21,5 +21,28 @@ namespace ListedLinks.Controllers
             var books = _context.Books.OrderBy(_ => _.Title.ToLower()).ToList<Book>();
             return View(books);
         }
+
+        //[HttpPost]
+        //public void Index([FromBody] Book book)
+        //{
+        //    _context.Books.Add(book);
+        //    _context.SaveChanges();
+
+        //    RedirectToAction("Index");
+        //}
+
+        public IActionResult Management()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public void Management([FromBody] Book book)
+        {
+            _context.Books.Add(book);
+            _context.SaveChanges();
+
+            RedirectToAction("Index");
+        }
     }
 }
