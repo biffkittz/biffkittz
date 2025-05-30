@@ -10,6 +10,7 @@ namespace ListedLinks.Models
         public DbSet<ListedLink> ListedLinks { get; set; }
         public DbSet<IPAddressString> IPAddressStrings { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         public string DbPath { get; }
 
@@ -20,8 +21,43 @@ namespace ListedLinks.Models
             optionsBuilder.UseSqlite(ListedLinksContext.ConnectionString /*$"Filename=ListedLinks.db"*/);
             optionsBuilder.UseSeeding((context, _) =>
             {
-                var seedingComplete = context.Set<ListedLink>().Any(lg => lg.Title == "Chapter 1: The Game We Didn’t Know We Were Playing");
-                if (!seedingComplete)
+                var seedingGenreComplete = context.Set<Genre>().Any();
+                if (!seedingGenreComplete)
+                {
+                    var programmingGenre = new Genre
+                    {
+                        Name = "Programming",
+                        Description = "Books that cover programming concepts and techniques."
+                    };
+
+                    var horrorGenre = new Genre
+                    {
+                        Name = "Horror",
+                        Description = "Scary stuff."
+                    };
+
+                    context.AddRange(programmingGenre, horrorGenre);
+
+                    context.AddRange(
+                        new Book
+                        {
+                            Title = "The Pragmatic Programmer: Your Journey To Mastery",
+                            Author = "Andrew Hunt, David Thomas",
+                            Blurb = "A guide to becoming a better programmer, covering topics such as code organization, debugging, and design patterns.",
+                            Genre = programmingGenre,
+                        },
+                        new Book
+                        {
+                            Title = "Horror",
+                            Author = "Mr H",
+                            Blurb = "Scary stuff.",
+                            Genre = horrorGenre,
+                        }
+                    );
+                }
+
+                var seedingListedLinkComplete = context.Set<ListedLink>().Any(lg => lg.Title == "Chapter 1: The Game We Didn’t Know We Were Playing");
+                if (!seedingListedLinkComplete)
                 {
                     context.AddRange(
                         new ListedLink
@@ -179,9 +215,9 @@ namespace ListedLinks.Models
                             CreatedAt = DateTime.UtcNow
                         }
                     );
-
-                    context.SaveChanges();
                 }
+
+                context.SaveChanges();
             });
         }   
 
@@ -221,5 +257,27 @@ namespace ListedLinks.Models
         public string? Text { get; set; }
 
         public DateTime CreatedAt { get; set; }
+    }
+
+    [PrimaryKey(nameof(Title), nameof(Author))]
+    public class Book
+    {
+        public string? Title { get; set; }
+
+        public string? Author { get; set; }
+
+        public string? Blurb { get; set; }
+
+        public Genre? Genre { get; set; }
+    }
+
+    [PrimaryKey(nameof(Name))]
+    public class Genre
+    {
+        public string? Name { get; set; }
+
+        public string? Description { get; set; }
+
+        public ICollection<Book?>? Books { get; }
     }
 }

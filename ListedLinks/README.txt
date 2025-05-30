@@ -15,3 +15,6 @@ Manual deployment of ListedLinks project to biffkittz.com hosted on DigitalOcean
  8) Execute 'sudo systemctl start kestrel-biffkittz.service' to start the service
  9) Execute 'ls -als /var/www/biffkittz' to review production site file structure
 10) Updated site should load @ https://biffkittz.com
+
+on host:
+dotnet tool install --global dotnet-ef --version 8.0.0

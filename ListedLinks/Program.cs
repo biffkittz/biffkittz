@@ -32,7 +32,7 @@ using (var dbContext = new ListedLinksContext())
 builder.Services.AddRazorPages();
 
 // TODO: Remove after debug
-builder.Services.AddSingleton<IHostEnvironment>(new HostingEnvironment());
+//builder.Services.AddSingleton<IHostEnvironment>(new HostingEnvironment());
 
 // Preparing for React
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

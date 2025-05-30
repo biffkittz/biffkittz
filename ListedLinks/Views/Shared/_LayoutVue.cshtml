@@ -11,19 +11,43 @@
         @RenderBody()
     </div>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js" asp-fallback-src="/js/vendor/vue-2.5.16.min.js" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 
     <script type="text/javascript">
+        // var app = new Vue({
+        //     el: '#vueAppTemplate',
+        //     data: { // these are Vue properties, so they are reactive
+        //         appMessage: 'Hello, I say to you. Hello world.'
+        //         // add more data properties here
+        //     },
+        //     methods: {
+        //         // add methods here
+        //     }
+        // });
+
         var app = new Vue({
-            el: '#vueAppTemplate',
+            el: '#bookVueApp',
             data: {
-                appMessage: 'Hello, I say to you. Hello world.'
-                // add more data properties here
+                selectedGenre: null,
+                countries: [
+                    { code: 'ca', name: 'Canada' },
+                    { code: 'us', name: 'United States' }
+                ],
+                selectedProvinceCode: null,
+                provinces: []
             },
             methods: {
-                // add methods here
+                countryChanged: function () {
+                    $.getJSON('@Url.Action("GetProvinces", "ProvinceLookup")?countryCode=' + this.selectedCountryCode, function (data) {
+                        this.provinces = data;
+                        console.log(this.provinces)
+                    }.bind(this));
+                }
             }
         });
     </script>

@@ -1,0 +1,17 @@
+﻿@model List<ListedLinks.Models.Book>
+
+@{
+	ViewBag.Title = "Biffkittz Books";
+}
+
+<div class="card" style="width: 1000px; margin-bottom:5px">
+	<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+		Books
+	</div>
+	@foreach (var book in Model)
+	{
+		<div class="card-body" style="padding-bottom: 10px; padding-top: 0px">
+			<li>@book.Title [@book.Author]</li>
+		</div>
+	}
+</div>

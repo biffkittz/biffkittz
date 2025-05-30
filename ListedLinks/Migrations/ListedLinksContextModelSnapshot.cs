@@ -17,6 +17,27 @@ namespace ListedLinks.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
+            modelBuilder.Entity("ListedLinks.Models.Book", b =>
+                {
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Blurb")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("GenreName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Title", "Author");
+
+                    b.HasIndex("GenreName");
+
+                    b.ToTable("Books");
+                });
+
             modelBuilder.Entity("ListedLinks.Models.Comment", b =>
                 {
                     b.Property<string>("Text")
@@ -28,6 +49,19 @@ namespace ListedLinks.Migrations
                     b.HasKey("Text", "CreatedAt");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ListedLinks.Models.Genre", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("ListedLinks.Models.IPAddressString", b =>
@@ -61,6 +95,20 @@ namespace ListedLinks.Migrations
                     b.HasKey("ListedLinkId");
 
                     b.ToTable("ListedLinks");
+                });
+
+            modelBuilder.Entity("ListedLinks.Models.Book", b =>
+                {
+                    b.HasOne("ListedLinks.Models.Genre", "Genre")
+                        .WithMany("Books")
+                        .HasForeignKey("GenreName");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("ListedLinks.Models.Genre", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

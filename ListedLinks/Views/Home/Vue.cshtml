@@ -2,29 +2,56 @@
     Adapted from https://www.giftoasis.com/blog/asp-net-core/vue/using-vue-with-asp-net-razor-can-be-great
 *@
 
-@page
+@model List<ListedLinks.Controllers.Province>
+
 @{
     Layout = "_LayoutVue";
 }
 
-@section Head {
+@* @section Head {
     <style>
         .buttonWrap {
             margin-top: 20px
         }
     </style>
-}
+} *@
 
-<div>
+<div id="bookVueApp">
+    <label>Genre</label>
+    <div class="form-group">
+        <div class="col-md-10">
+            <select id="Genre" name="Genre" class="form-control"
+                    v-model="selectedGenre" v-on:change="genreChanged">
+                <option v-for="ganre in genres" v-bind:value="genre.name">
+                    {{ genre.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <label>Books</label>
+    <div class="form-group">
+        <div class="col-md-10">
+            <select id="BookTitles" name="BookTitles" class="form-control"
+                    v-model="selectedBook">
+                <option v-for="book in books" v-bind:value="book.title">
+                    {{ province.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+
+@* <div>
     <h1>Vue'd</h1>
 
     Message from Vue: <span v-text="appMessage"></span><br />
 
     <div class="buttonWrap">
-        <button type="button" v-if="displayButton1">BestButton</button>
-        <button type="button" v-if="displayButton2">TheRestButton</button>
+        <button type="button" v-if="displayButton1">Click Me</button>
+        <button type="button" v-if="displayButton2">No, me</button>
     </div>
-</div>
+</div> *@
 
 
 @section Scripts {
