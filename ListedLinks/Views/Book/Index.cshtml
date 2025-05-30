@@ -25,38 +25,56 @@
 
 <hr />
 
-<input type="text" id="bookInfo" style="width: 768px" placeholder="<title>|||<author>|||<blurb>" />
-<button type="button" class="btn btn-primary" onclick="saveBook()">Submit</button>
+<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+    <input type="text" id="bookTitle" style="width: 980px" placeholder="<title>" />
+</div>
+<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+    <input type="text" id="bookAuthor" style="width: 980px" placeholder="<author>" />
+</div>
+<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+    <input type="text" id="bookBlurb" style="width: 980px" placeholder="<blurb>" />
+</div>
+<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
+    <button type="button" class="btn btn-primary" onclick="saveBook()">Submit</button>
+</div>
+
 <script>
     function saveBook() {
-        var bookInfo = {
-            "Title": $("#bookInfo").val().split("|||")[0],
-            "Author": $("#bookInfo").val().split("|||")[1],
-            "Blurb": $("#bookInfo").val().split("|||")[2],
-            //"Genre": new Date().toISOString()
-        }
+        var title = $("#bookTitle").val();
+        var author = $("#bookAuthor").val();
+        var blurb = $("#bookBlurb").val();
 
-        function redirectToRefresh() {
-            window.location.replace(
-                "https://biffkittz.com/Book",
-            );
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "https://biffkittz.com/Book/Management", //"https://biffkittz.com", "http://127.0.0.1:8080",
-            data: JSON.stringify(bookInfo),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function () {
-                redirectToRefresh()
-            },
-            error: function () {
-                redirectToRefresh()
-            },
-            complete: function () {
-                redirectToRefresh()
+        if (title == '' || author == '' || blurb == '') {
+            alert('Please specify all book properties before adding')
+        } else {
+            var bookInfo = {
+                "Title": title,
+                "Author": author,
+                "Blurb": blurb
             }
-        });
+
+            function redirectToRefresh() {
+                window.location.replace(
+                    "https://biffkittz.com/Book",
+                );
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "https://biffkittz.com/Book/Management", //"https://biffkittz.com", "http://127.0.0.1:8080",
+                data: JSON.stringify(bookInfo),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    redirectToRefresh()
+                },
+                error: function () {
+                    redirectToRefresh()
+                },
+                complete: function () {
+                    redirectToRefresh()
+                }
+            });
+        }
     }
 </script>
