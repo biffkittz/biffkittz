@@ -1,0 +1,43 @@
+log_schema:
+  # Use AutoExtract timestamp if found, otherwise use ingested time.
+  timestamp_key: "observedtimestamp"
+
+sources:
+  # Add your desired log sources here...
+  nginxbiffkittz:
+    type: "file"
+    include:
+      - var/log/biffkittz.log
+    read_from: end
+
+transforms:
+  add_timezone:
+    type: remap
+    # Use the agent local timezone for timestamps without an explicit TZ
+    source: |-
+      .__agent_timezone = get_timezone_name!()
+    # Reference all of your sources here...
+    inputs:
+      - nginxbiffkittz
+
+sinks:
+  sparklogs:
+    type: http
+    inputs:
+      - add_timezone
+    uri: "https://ingest-us.engine.itlightning.app/ingest/v1"
+    request:
+      headers:
+        # Customize headers as desired, e.g., set to "true" to disable AutoExtract
+        X-No-AutoExtract: "false"
+    method: post
+    compression: gzip
+    encoding:
+      codec: json
+    auth:
+      strategy: basic
+      user: ""
+      password: ""
+    batch:
+      # Ingestion is optimized for 1 MB batches
+      max_bytes: 1048576
