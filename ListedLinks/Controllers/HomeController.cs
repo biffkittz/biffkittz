@@ -46,6 +46,15 @@ namespace ListedLinks.Controllers
         {
             _context.Comments.Add(comment);
             _context.SaveChanges();
+
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+
+            _hubContext.Clients.All.SendAsync(
+                "ReceiveMessage",
+                "Visitor",
+                $"{comment.Text} [{ip ?? "<unknown_ip>"}]"
+            );
+
             var linkGroups = _context.ListedLinks.OrderBy(_ => _.Title.ToLower()).ToList<ListedLink>();
 
             return View(linkGroups);
