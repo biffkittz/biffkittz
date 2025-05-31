@@ -44,5 +44,33 @@ namespace ListedLinks.Controllers
 
             RedirectToAction("Index");
         }
+
+        [HttpPost, ActionName("DeleteBook")]
+        public async Task<IActionResult> DeleteBook(string titleAuthorKey)
+        {
+            if (string.IsNullOrEmpty(titleAuthorKey))
+            {
+                return NotFound();
+            }
+
+            var parts = titleAuthorKey.Split(new[] { "^^^" }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length != 2)
+            {
+                return NotFound();
+            }
+
+            var bookToDelete = await _context.Books.FindAsync(parts[0], parts[1]);
+
+            if (bookToDelete != null)
+            {
+                _context.Books.Remove(bookToDelete);
+                await _context.SaveChangesAsync();
+            } else {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

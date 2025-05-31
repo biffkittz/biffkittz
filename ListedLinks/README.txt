@@ -18,3 +18,6 @@ Manual deployment of ListedLinks project to biffkittz.com hosted on DigitalOcean
 
 on host:
 dotnet tool install --global dotnet-ef --version 8.0.0
+
+on host:
+watch tail -n 1 /var/log/biffkittz.log
