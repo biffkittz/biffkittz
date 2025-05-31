@@ -24,7 +24,7 @@
 </div> *@
 
 <div class="card" style="width: 1000px; margin-bottom:5px">
-	<div class="card-header">
+	<div class="card-header" style="font-weight:600">
 		May/June 2025: What I'm doing
 	</div>
 	<div class="card-body">
@@ -43,8 +43,8 @@
 </div>
 
 <div class="card" style="width: 1000px; margin-bottom:5px">
-	<div class="card-header">
-		biffkittz.com site details and deployment
+	<div class="card-header" style="font-weight:600">
+		biffkittz.com: site details
 	</div>
 	<div class="card-body">
 		<ul style="list-style-type:circle">
@@ -55,22 +55,23 @@
 			<li>.NET 9.0</li>
 			<li>ASP.NET MVC with Razor Pages</li>
 			<li>OpenAI/ChatGPT-integrated [ask for details]</li>
-			<li>SignalR-integrated Pages to display realtime ScreenConnect server activity and eventually perform automated actions based on realtime activity type, where realtime automation could be something like relaying data to another API (e.g. ChatGPT for realtime analysis of activity), alerting on certain event data via email/http request, and so on [ask for details]</li>
+			<li>SignalR-integrated pages display realtime ScreenConnect server activity in the browser, to be augmented with the ability to create and manage realtime "stream actions" (emails, integrations with the likes of Azure OpenAI models, selective data forwarding) based on ingested ScreenConnect server activity [ask for details]</li>
 			<li>EF Core ORM</li>
 			<li>SQLite database, to be migrated to PostgreSQL in time</li>
-			<li>Deployed via GitHub Actions [seems to be working, now]</li>
+			<li>Deployed via GitHub Actions</li>
+			<li>Configured with Vector to collect, tansform, and route logs / metrics to SparkLogs for ingestion / visualization</li>
 		</ul>
 	</div>
 </div>
 
 <div class="card" style="width: 1000px; margin-bottom:5px">
-	<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px">
-		Recent links of (tech) learning
+	<div class="card-header" style="padding-bottom: 10px; margin-bottom:10px; font-weight: 600">
+		Useful links
 	</div>
 		@foreach (var listedLink in Model)
 		{
 			<div class="card-body" style="padding-bottom: 10px; padding-top: 0px">
-				<li><a href="@listedLink.Url" target="_blank">@listedLink.Title</a>[@listedLink.Author]</li>
+				<a href="@listedLink.Url" target="_blank">@listedLink.Title</a> [@listedLink.Author]
 			</div>
 		}
 </div>
