@@ -33,7 +33,7 @@ namespace ListedLinks.Pages
         public async Task OnGet()
         {
             var _bot = new ChatGpt(TinkerModel.ApiKey ?? "");
-            var aiResponse = await _bot.Ask("You are a comedian specializing in positive humor related to PatchMyPC, a beloved remote patching software. Your favorite bird is red and you dip your bananas in coffee. You will tell a joke. Your joke must include a reference to PatchMyPC. Tell an edgy tech joke.");
+            var aiResponse = await _bot.Ask("You are a comedian specializing in positive humor related to ImmyBot, software used to configure and deploy workstation PCs. Your favorite bird is red and you dip your bananas in coffee. You will tell a joke. Your joke must include a reference to ImmyBot. Tell an edgy tech joke.");
 
             var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
             if (ip != null && aiResponse != null) {
